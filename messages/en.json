@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "services": "Services",
+    "shops": "Shops",
+    "flights": "Flights",
+    "reviews": "Reviews",
+    "catalog": "Catalog",
+    "home": "Home",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation"
+  },
+  "footer": {
+    "tagline": "Personal buyer in Dubai. Purchase and delivery Dubai — Moscow.",
+    "contact": "Contact",
+    "navigation": "Navigation",
+    "rights": "All rights reserved.",
+    "telegramCta": "Telegram →"
+  },
+  "common": {
+    "telegram": "Telegram",
+    "writeTelegram": "Message on Telegram",
+    "viewCatalog": "View catalog",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "close": "Close"
+  },
+  "hero": {
+    "marquee": "DUBAI — MOSCOW · STABLE FLIGHTS · PERSONAL BUYER · SINCE 2019 · ",
+    "statFlights": "flights a year",
+    "statParcels": "parcels",
+    "statYears": "years of experience"
+  },
+  "services": {
+    "kicker": "How it works",
+    "title": "Services",
+    "subtitle": "Four clear directions — no noise, transparent terms.",
+    "pageTitle": "Services & flights",
+    "pageDescription": "How purchasing, parcel handoff, and Dubai — Moscow flight schedule work.",
+    "flightsKicker": "Schedule",
+    "flightsTitle": "Upcoming flights",
+    "flightsEmpty": "Upcoming dates will appear here. Message on Telegram for the next available slot.",
+    "date": "Date",
+    "direction": "Direction",
+    "note": "Note",
+    "termsKicker": "Terms",
+    "termsTitle": "How we work"
+  },
+  "catalog": {
+    "kicker": "Sources",
+    "title": "Where I buy",
+    "subtitle": "UAE stores and marketplaces I source from regularly.",
+    "pageTitle": "Shop catalog",
+    "pageDescription": "UAE stores and marketplaces used by the personal buyer.",
+    "searchPlaceholder": "Search by name",
+    "viewShop": "View",
+    "empty": "Nothing found for the selected filters.",
+    "filters": {
+      "all": "All",
+      "luxury": "Luxury",
+      "marketplace": "Marketplace",
+      "shoes": "Shoes",
+      "tech": "Tech",
+      "beauty": "Beauty",
+      "other": "Other",
+      "department": "Department"
+    }
+  },
+  "reviews": {
+    "kicker": "Clients",
+    "title": "Reviews",
+    "subtitle": "Short notes on delivery, timing, and handoff.",
+    "pageTitle": "Reviews",
+    "pageDescription": "Client reviews of the Dubai — Moscow personal buyer.",
+    "leaveReview": "Leave a review",
+    "loadMore": "Load more",
+    "empty": "No published reviews yet.",
+    "filterAll": "All",
+    "filter5": "5",
+    "filter4": "4",
+    "filter3": "3 and below"
+  },
+  "reviewForm": {
+    "title": "Leave a review",
+    "name": "Name",
+    "city": "City",
+    "telegram": "Telegram",
+    "telegramHint": "not published",
+    "text": "Review text",
+    "rating": "Rating",
+    "submit": "Submit",
+    "submitting": "Sending…",
+    "success": "Thank you! Your review will appear after moderation",
+    "close": "Close",
+    "apiUnavailable": "Reviews are temporarily unavailable. Please try again later.",
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameMin": "Name: at least 2 characters",
+      "nameMax": "Name: max 50 characters",
+      "textRequired": "Please write a review",
+      "textMin": "At least 20 characters",
+      "textMax": "Max 2000 characters",
+      "ratingRequired": "Choose a rating from 1 to 5"
+    }
+  },
+  "meta": {
+    "homeTitle": "Personal buyer in Dubai",
+    "homeDescription": "Purchases from UAE stores, regular flights, parcel handoff Dubai — Moscow."
+  }
+}
