@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -202,10 +202,11 @@ function FlightFormModal({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FlightFormValues>({
     resolver: zodResolver(flightFormSchema),
-    values: {
+    defaultValues: {
       date: flight ? toLocalInput(flight.date) : "",
       direction:
         flight?.direction === "MOW-DXB" ? "MOW-DXB" : "DXB-MOW",
@@ -214,9 +215,27 @@ function FlightFormModal({
     },
   });
 
+  useEffect(() => {
+    if (!open) return;
+    reset({
+      date: flight ? toLocalInput(flight.date) : "",
+      direction:
+        flight?.direction === "MOW-DXB" ? "MOW-DXB" : "DXB-MOW",
+      noteRu: flight?.noteRu ?? "",
+      noteEn: flight?.noteEn ?? "",
+    });
+  }, [open, flight, reset]);
+
   async function onSubmit(values: FlightFormValues) {
     if (flight) {
-      const result = await updateFlight(flight.id, values);
+      let result;
+      try {
+        result = await updateFlight(flight.id, values);
+      } catch (error) {
+        console.error("updateFlight failed", error);
+        toast.error("Ошибка сервера при сохранении вылета");
+        return;
+      }
       if (!result.ok) {
         toast.error(result.error);
         return;

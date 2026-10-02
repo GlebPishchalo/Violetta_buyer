@@ -17,7 +17,10 @@ export async function createFlight(raw: unknown) {
   await requireAdmin();
   const parsed = flightSchema.safeParse(raw);
   if (!parsed.success) {
-    return { ok: false as const, error: "Ошибка валидации" };
+    return {
+      ok: false as const,
+      error: parsed.error.issues[0]?.message ?? "Ошибка валидации",
+    };
   }
 
   const data = parsed.data;
@@ -37,7 +40,10 @@ export async function updateFlight(id: string, raw: unknown) {
   await requireAdmin();
   const parsed = flightSchema.safeParse(raw);
   if (!parsed.success) {
-    return { ok: false as const, error: "Ошибка валидации" };
+    return {
+      ok: false as const,
+      error: parsed.error.issues[0]?.message ?? "Ошибка валидации",
+    };
   }
 
   const data = parsed.data;

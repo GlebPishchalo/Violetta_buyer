@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { pickDescription } from "@/lib/i18n-fields";
 import type { Locale } from "@/i18n/routing";
@@ -31,40 +30,30 @@ export function ShopCard({ shop }: ShopCardProps) {
     | "beauty"
     | "other"
     | "department";
-  // TODO: replace shop-placeholder with per-shop WebP via stock-images MCP
-  const imageSrc = shop.image ?? "/images/shop-placeholder.jpg";
-
   return (
-    <article className="group flex h-full flex-col border border-line bg-ink-soft transition-colors hover:border-gold/40">
-      <div className="relative aspect-[4/3] overflow-hidden bg-ink">
-        <Image
-          src={imageSrc}
-          alt={shop.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover grayscale transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      </div>
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">
-          {t(`filters.${categoryKey}`)}
-        </p>
-        <h3 className="font-serif text-xl text-bone">{shop.name}</h3>
+    <article className="group grid grid-cols-1 items-center gap-3 py-5 transition-colors sm:grid-cols-[minmax(8rem,1fr)_minmax(0,3fr)_auto] sm:gap-6">
+      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-gold">
+        {t(`filters.${categoryKey}`)}
+      </p>
+      <div className="min-w-0 space-y-1.5">
+        <h3 className="font-serif text-xl text-bone transition-colors group-hover:text-gold">
+          {shop.name}
+        </h3>
         {description ? (
-          <p className="flex-1 font-sans text-sm leading-relaxed text-ash">
+          <p className="font-sans text-sm leading-relaxed text-ash">
             {description}
           </p>
         ) : null}
-        <a
-          href={shop.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 inline-flex items-center gap-1 font-sans text-sm text-gold transition-colors hover:text-copper"
-        >
-          {t("viewShop")}
-          <span aria-hidden>→</span>
-        </a>
       </div>
+      <a
+        href={shop.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 font-sans text-sm text-gold transition-colors hover:text-copper sm:justify-self-end"
+      >
+        {t("viewShop")}
+        <span aria-hidden>→</span>
+      </a>
     </article>
   );
 }

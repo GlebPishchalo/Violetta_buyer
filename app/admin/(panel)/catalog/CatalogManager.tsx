@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import Image from "next/image";
 import {
   DndContext,
@@ -13,10 +13,11 @@ import {
 import {
   SortableContext,
   arrayMove,
-  rectSortingStrategy,
+  verticalListSortingStrategy,
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { ExternalLink, GripVertical, Pencil, Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -156,8 +157,8 @@ export function CatalogManager({ shops }: CatalogManagerProps) {
           collisionDetection={closestCenter}
           onDragEnd={onDragEnd}
         >
-          <SortableContext items={ids} strategy={rectSortingStrategy}>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <SortableContext items={ids} strategy={verticalListSortingStrategy}>
+            <div className="divide-y divide-line border-y border-line">
               {items.map((shop) => (
                 <SortableShopCard
                   key={shop.id}
@@ -220,46 +221,53 @@ function SortableShopCard({
       style={style}
       className="border border-line bg-ink transition-colors hover:bg-white/[0.02]"
     >
-      <div
-        className="relative aspect-[4/3] cursor-grab bg-ink-soft active:cursor-grabbing"
-        {...attributes}
-        {...listeners}
-      >
-        {shop.image ? (
-          <Image
-            src={shop.image}
-            alt={shop.name}
-            fill
-            className="object-cover grayscale"
-            sizes="300px"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center font-mono text-xs text-ash">
-            нет фото
+      <div className="flex min-w-0 items-center gap-3 py-4 sm:gap-5">
+        <button
+          type="button"
+          className="flex h-9 w-8 shrink-0 cursor-grab items-center justify-center text-ash hover:text-gold active:cursor-grabbing"
+          aria-label={`Переместить магазин «${shop.name}»`}
+          {...attributes}
+          {...listeners}
+        >
+          <GripVertical size={18} aria-hidden="true" />
+        </button>
+        <div className="min-w-0 flex-1">
+          <div className="mb-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <h3 className="truncate font-serif text-lg text-bone">{shop.name}</h3>
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-gold">
+              {shop.category}
+            </span>
           </div>
-        )}
-      </div>
-      <div className="space-y-2 p-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ash">
-          {shop.category}
-        </p>
-        <h3 className="font-serif text-lg text-bone">{shop.name}</h3>
-        <div className="flex gap-3 pt-1">
+          <a
+            href={shop.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex max-w-full items-center gap-1 truncate text-xs text-ash transition-colors hover:text-bone"
+          >
+            <span className="truncate">{shop.url}</span>
+            <ExternalLink size={12} className="shrink-0" aria-hidden="true" />
+          </a>
+        </div>
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <button
             type="button"
-            className="text-xs text-gold hover:underline"
+            className="flex h-9 w-9 items-center justify-center text-gold transition-colors hover:bg-gold/10"
             onClick={onEdit}
             disabled={disabled}
+            aria-label={`Изменить «${shop.name}»`}
+            title="Изменить"
           >
-            Изменить
+            <Pencil size={16} aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="text-xs text-copper hover:underline"
+            className="flex h-9 w-9 items-center justify-center text-copper transition-colors hover:bg-copper/10"
             onClick={onDelete}
             disabled={disabled}
+            aria-label={`Удалить «${shop.name}»`}
+            title="Удалить"
           >
-            Удалить
+            <Trash2 size={16} aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -287,7 +295,7 @@ function ShopFormModal({
     formState: { errors, isSubmitting },
   } = useForm<ShopFormValues>({
     resolver: zodResolver(shopFormSchema),
-    values: {
+    defaultValues: {
       name: shop?.name ?? "",
       url: shop?.url ?? "",
       category: (categories.includes(shop?.category as (typeof categories)[number])
@@ -298,6 +306,20 @@ function ShopFormModal({
       image: shop?.image ?? "",
     },
   });
+
+  useEffect(() => {
+    if (!open) return;
+    reset({
+      name: shop?.name ?? "",
+      url: shop?.url ?? "",
+      category: (categories.includes(shop?.category as (typeof categories)[number])
+        ? shop?.category
+        : "other") as ShopFormValues["category"],
+      descriptionRu: shop?.descriptionRu ?? "",
+      descriptionEn: shop?.descriptionEn ?? "",
+      image: shop?.image ?? "",
+    });
+  }, [open, shop, reset]);
 
   const image = watch("image");
 
