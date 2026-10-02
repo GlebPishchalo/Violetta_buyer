@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Review, Shop } from "@prisma/client";
+import type { Flight, Review, Shop } from "@prisma/client";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { CatalogSection } from "@/components/home/CatalogSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
+import { FlightsTable } from "@/components/services/FlightsTable";
 import { Divider } from "@/components/ui/Divider";
+import { Kicker } from "@/components/ui/Kicker";
+import { Section } from "@/components/ui/Section";
 import { getBlock, getContentBlocks } from "@/lib/content";
 import { prisma } from "@/lib/db";
 import { buildPageMetadata } from "@/lib/seo";
@@ -54,15 +57,29 @@ async function safeReviews(take = 6): Promise<Review[]> {
   }
 }
 
+async function safeFlights(take = 4): Promise<Flight[]> {
+  try {
+    return await prisma.flight.findMany({
+      where: { date: { gte: new Date() } },
+      orderBy: { date: "asc" },
+      take,
+    });
+  } catch {
+    return [];
+  }
+}
+
 export default async function HomePage({ params }: HomePageProps) {
   const locale = params.locale as Locale;
   setRequestLocale(locale);
 
-  const [blocks, shops, reviews] = await Promise.all([
+  const [blocks, shops, reviews, flights] = await Promise.all([
     getContentBlocks(),
     safeShops(),
     safeReviews(6),
+    safeFlights(4),
   ]);
+  const tServices = await getTranslations({ locale, namespace: "services" });
 
   const telegramUrl = getBlock(
     blocks,
@@ -123,6 +140,16 @@ export default async function HomePage({ params }: HomePageProps) {
       <ServicesSection items={services} />
       <Divider />
       <CatalogSection shops={shops} />
+      <Divider variant="diamond" />
+      <Section id="flights">
+        <div className="mb-8 max-w-xl space-y-3">
+          <Kicker>{tServices("flightsKicker")}</Kicker>
+          <h2 className="font-serif text-3xl text-bone md:text-4xl">
+            {tServices("flightsTitle")}
+          </h2>
+        </div>
+        <FlightsTable flights={flights} locale={locale} />
+      </Section>
       <Divider variant="diamond" />
       <ReviewsSection
         reviews={reviews.map((review: Review) => ({
