@@ -42,18 +42,18 @@ export default function AdminRootLayout({ children }: AdminRootLayoutProps) {
       lang="ru"
       className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-ink text-bone antialiased">
+      <body className="admin-body bg-ink text-bone antialiased">
         <Grain />
         <AdminProviders>
           {children}
           <Toaster
-            theme="dark"
+            theme="light"
             position="top-right"
             toastOptions={{
               style: {
-                background: "#111114",
-                color: "#EDEDED",
-                border: "1px solid rgba(201,162,39,0.3)",
+                background: "#f5fbfa",
+                color: "#183d3a",
+                border: "1px solid rgba(52,125,119,0.24)",
               },
             }}
           />

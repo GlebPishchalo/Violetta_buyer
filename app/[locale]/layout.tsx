@@ -56,10 +56,10 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body>
+      <body className="public-body">
         <Grain />
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <div className="flex min-h-screen flex-col">
+          <div className="public-site flex min-h-screen flex-col">
             <Header telegramUrl={telegramUrl} />
             <main className="flex-1">
               <PageTransition>{children}</PageTransition>

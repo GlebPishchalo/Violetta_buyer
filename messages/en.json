@@ -27,10 +27,30 @@
     "close": "Close"
   },
   "hero": {
-    "marquee": "DUBAI — MOSCOW · STABLE FLIGHTS · PERSONAL BUYER · SINCE 2019 · ",
+    "marquee": "DUBAI — MOSCOW · STABLE FLIGHTS · PERSONAL BUYER · SINCE 2026 · ",
     "statFlights": "flights a year",
     "statParcels": "parcels",
     "statYears": "years of experience"
+  },
+  "benefits": {
+    "kicker": "Our route",
+    "title": "From boutique to you",
+    "dubai": "Dubai",
+    "moscow": "Moscow",
+    "items": [
+      {
+        "title": "UAE purchasing",
+        "body": "I shop at Dubai stores and boutiques on your request."
+      },
+      {
+        "title": "Purchase confirmation",
+        "body": "We confirm the order and price before purchase; I keep the store receipt."
+      },
+      {
+        "title": "Parcel handoff",
+        "body": "I arrange delivery on the Dubai — Moscow route and coordinate collection."
+      }
+    ]
   },
   "services": {
     "kicker": "How it works",

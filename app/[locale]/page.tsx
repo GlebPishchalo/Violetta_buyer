@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Flight, Review, Shop } from "@prisma/client";
 import { HeroSection } from "@/components/home/HeroSection";
+import { BenefitsSection } from "@/components/home/BenefitsSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { CatalogSection } from "@/components/home/CatalogSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
@@ -136,10 +137,10 @@ export default async function HomePage({ params }: HomePageProps) {
           years: Number(getBlock(blocks, "stat_years", locale, "5")) || 5,
         }}
       />
-      <Divider variant="diamond" />
-      <ServicesSection items={services} />
-      <Divider />
+      <BenefitsSection />
       <CatalogSection shops={shops} />
+      <Divider />
+      <ServicesSection items={services} />
       <Divider variant="diamond" />
       <Section id="flights">
         <div className="mb-8 max-w-xl space-y-3">

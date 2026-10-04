@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Menu, Search, X, Store, Plane, PanelsTopLeft, Send, Star, type LucideIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 type HeaderProps = {
@@ -13,9 +14,11 @@ type HeaderProps = {
 export function Header({ telegramUrl }: HeaderProps) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
+  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -31,74 +34,96 @@ export function Header({ telegramUrl }: HeaderProps) {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const syncHash = () => setHash(window.location.hash);
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    window.addEventListener("popstate", syncHash);
+    return () => {
+      window.removeEventListener("hashchange", syncHash);
+      window.removeEventListener("popstate", syncHash);
+    };
+  }, [pathname]);
+
+  function selectNavItem(href: string) {
+    setHash(href.endsWith("#flights") ? "#flights" : "");
+    setMenuOpen(false);
+  }
+
   const nav = [
-    { href: "/services" as const, label: t("services") },
-    { href: "/catalog" as const, label: t("shops") },
-    { href: "/services#flights" as const, label: t("flights") },
-    { href: "/reviews" as const, label: t("reviews") },
+    { href: "/catalog" as const, label: t("shops"), icon: Store },
+    { href: "/services#flights" as const, label: t("flights"), icon: Plane },
+    { href: "/services" as const, label: t("services"), icon: PanelsTopLeft },
+    { href: "/reviews" as const, label: t("reviews"), icon: Star },
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b border-line transition-[height,background-color] duration-300 ${
-          scrolled
-            ? "bg-ink-soft/90 backdrop-blur-md"
-            : "bg-ink/80 backdrop-blur-md"
+        className={`sticky top-0 z-50 border-b border-[#347d77]/20 transition-[background,box-shadow] duration-300 ${
+          scrolled ? "bg-[#e6f4f1]/95 shadow-[0_5px_25px_rgba(29,91,85,0.08)] backdrop-blur-md" : "bg-[#e6f4f1]/85 backdrop-blur-md"
         }`}
       >
-        <div
-          className={`mx-auto flex max-w-6xl items-center justify-between px-5 md:px-8 ${
-            scrolled ? "h-14" : "h-16"
-          }`}
-        >
+        <div className="mx-auto grid h-[68px] max-w-7xl grid-cols-3 items-center px-4 sm:px-6">
+          <Link
+            href="/catalog"
+            className="inline-flex h-9 w-9 items-center justify-center gap-2 justify-self-start rounded-full border border-[#347d77]/30 px-0 text-[#347d77] transition-[background,color] hover:bg-white/70 hover:text-[#173e3a] sm:w-auto sm:justify-center sm:px-3"
+            aria-label={t("shops")}
+            title={t("shops")}
+          >
+            <Search size={16} strokeWidth={1.5} aria-hidden="true" />
+            <span className="hidden font-sans text-xs sm:inline">{t("shops")}</span>
+          </Link>
           <Link
             href="/"
-            className="font-serif text-lg tracking-wide text-bone transition-colors hover:text-gold"
+            className="justify-self-center whitespace-nowrap font-serif text-[1.5rem] leading-none text-[#286a64] transition-transform duration-300 hover:scale-[1.03] sm:text-[1.8rem]"
           >
-            Avalise
+            AVALISE
           </Link>
-
-          <nav
-            className="hidden items-center gap-8 md:flex"
-            aria-label={t("mainNav")}
-          >
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="font-sans text-sm text-ash transition-colors hover:text-bone"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3 md:gap-4">
+          <div className="flex items-center justify-self-end gap-3 sm:gap-5">
             <LocaleSwitcher />
             <a
               href={telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden items-center gap-2 bg-gold px-4 py-2 font-sans text-sm font-medium text-ink transition-colors hover:bg-copper sm:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full bg-[#cae8e3] text-[#286a64] transition-[background,transform] hover:scale-105 hover:bg-[#b5ded7] sm:inline-flex"
+              aria-label={tc("telegram")}
+              title={tc("telegram")}
             >
-              <TelegramIcon />
-              {tc("telegram")}
+              <Send size={16} strokeWidth={1.5} aria-hidden="true" />
             </a>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center border border-line text-bone md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#286a64] transition-colors hover:bg-[#cae8e3] md:hidden"
               aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <span className="sr-only">
-                {menuOpen ? t("menuClose") : t("menuOpen")}
-              </span>
-              <Burger open={menuOpen} />
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
+        <nav
+          className="hidden h-[54px] items-end justify-center gap-1 border-t border-[#347d77]/15 px-5 md:flex"
+          aria-label={t("mainNav")}
+        >
+          {nav.map((item) => (
+            <DesktopNavLink
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              onClick={() => selectNavItem(item.href)}
+              active={
+                item.href === "/services#flights"
+                  ? pathname === "/services" && hash === "#flights"
+                  : item.href === "/services"
+                    ? pathname === "/services" && hash !== "#flights"
+                    : pathname === item.href
+              }
+            />
+          ))}
+        </nav>
       </header>
 
       <AnimatePresence>
@@ -112,7 +137,7 @@ export function Header({ telegramUrl }: HeaderProps) {
           >
             <button
               type="button"
-              className="absolute inset-0 bg-ink/80"
+              className="absolute inset-0 bg-bone/40 backdrop-blur-sm"
               aria-label={t("menuClose")}
               onClick={() => setMenuOpen(false)}
             />
@@ -125,14 +150,14 @@ export function Header({ telegramUrl }: HeaderProps) {
               transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: "easeOut" }}
             >
               <div className="mb-10 flex items-center justify-between">
-                <span className="font-serif text-lg text-bone">DXB·MOW</span>
+                <span className="font-serif text-lg tracking-wide text-bone">AVALISE</span>
                 <button
                   type="button"
                   onClick={() => setMenuOpen(false)}
-                  className="font-mono text-sm text-ash"
+                  className="flex h-10 w-10 items-center justify-center text-ash"
                   aria-label={t("menuClose")}
                 >
-                  ✕
+                  <X size={20} />
                 </button>
               </div>
               <ul className="flex flex-col gap-6">
@@ -140,7 +165,7 @@ export function Header({ telegramUrl }: HeaderProps) {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => selectNavItem(item.href)}
                       className="font-serif text-2xl text-bone transition-colors hover:text-gold"
                     >
                       {item.label}
@@ -161,29 +186,72 @@ export function Header({ telegramUrl }: HeaderProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-line bg-ink-soft/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_32px_rgba(20,76,72,0.12)] backdrop-blur-md md:hidden" aria-label={t("mobileNav")}>
+        <DockLink href="/catalog" icon={Store} label={t("shops")} active={pathname === "/catalog"} onClick={() => selectNavItem("/catalog")} />
+        <DockLink href="/services#flights" icon={Plane} label={t("flights")} active={pathname === "/services" && hash === "#flights"} onClick={() => selectNavItem("/services#flights")} />
+        <DockLink href="/services" icon={PanelsTopLeft} label={t("services")} active={pathname === "/services" && hash !== "#flights"} onClick={() => selectNavItem("/services")} />
+        <DockLink href="/reviews" icon={Star} label={t("reviews")} active={pathname === "/reviews"} onClick={() => selectNavItem("/reviews")} />
+      </nav>
     </>
   );
 }
 
-function Burger({ open }: { open: boolean }) {
+function DockLink({
+  href,
+  icon: Icon,
+  label,
+  active,
+  onClick,
+}: {
+  href: "/catalog" | "/services#flights" | "/services" | "/reviews";
+  icon: LucideIcon;
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
   return (
-    <span className="relative block h-3.5 w-5" aria-hidden>
-      <span
-        className={`absolute left-0 top-0 h-px w-full bg-bone transition-transform ${
-          open ? "translate-y-[7px] rotate-45" : ""
-        }`}
-      />
-      <span
-        className={`absolute left-0 top-[7px] h-px w-full bg-bone transition-opacity ${
-          open ? "opacity-0" : "opacity-100"
-        }`}
-      />
-      <span
-        className={`absolute left-0 top-[14px] h-px w-full bg-bone transition-transform ${
-          open ? "-translate-y-[7px] -rotate-45" : ""
-        }`}
-      />
-    </span>
+    <Link
+      href={href}
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
+      className={`flex min-h-[68px] flex-col items-center justify-center gap-1 rounded-t-[20px] px-1 text-center transition-[background,color] duration-200 hover:bg-[#cce9e4] hover:text-[#173e3a] ${
+        active ? "bg-[#e6f4f1] text-[#205f59]" : "text-[#286a64]"
+      }`}
+    >
+      <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
+      <span className="max-w-full text-[9px] leading-tight">{label}</span>
+    </Link>
+  );
+}
+
+function DesktopNavLink({
+  href,
+  label,
+  icon: Icon,
+  active,
+  onClick,
+}: {
+  href: "/catalog" | "/services#flights" | "/services" | "/reviews";
+  label: string;
+  icon: LucideIcon;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
+      className={`inline-flex h-[46px] items-center gap-2 rounded-t-[16px] px-5 text-[11px] uppercase tracking-[0.08em] transition-[background,color] duration-200 ${
+        active
+          ? "bg-[#cce9e4] text-[#174e49]"
+          : "text-[#527a75] hover:bg-white/65 hover:text-[#173e3a]"
+      }`}
+    >
+      <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
+      {label}
+    </Link>
   );
 }
 

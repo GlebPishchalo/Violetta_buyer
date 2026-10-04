@@ -16,13 +16,13 @@ export function AdminTopbar() {
   const title = titles[pathname] ?? "Админ";
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line bg-ink-soft/90 px-8 backdrop-blur-md">
-      <h1 className="font-serif text-xl text-bone">{title}</h1>
+    <header className="sticky top-[112px] z-30 flex h-14 items-center justify-between border-b border-line bg-ink-soft/90 px-4 backdrop-blur-md sm:px-6 md:top-0 md:h-16 md:px-8">
+      <h1 className="truncate font-serif text-lg text-bone sm:text-xl">{title}</h1>
       <a
         href="/ru"
         target="_blank"
         rel="noopener noreferrer"
-        className="border border-line px-3 py-1.5 font-sans text-sm text-ash transition-colors hover:border-gold hover:text-gold"
+        className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line px-3 py-1.5 font-sans text-xs text-ash transition-colors hover:border-gold hover:text-gold sm:text-sm"
       >
         Открыть сайт
       </a>

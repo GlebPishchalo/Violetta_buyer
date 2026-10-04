@@ -17,9 +17,9 @@ export default async function AdminPanelLayout({ children }: PanelLayoutProps) {
   return (
     <div className="min-h-screen bg-ink-soft">
       <AdminSidebar />
-      <div className="pl-60">
+      <div className="pt-[112px] md:pl-60 md:pt-0">
         <AdminTopbar />
-        <div className="mx-auto max-w-[1200px] p-8">{children}</div>
+        <div className="mx-auto max-w-[1200px] px-4 pb-8 pt-5 sm:px-6 md:p-8">{children}</div>
       </div>
     </div>
   );

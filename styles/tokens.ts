@@ -3,13 +3,13 @@
  * Mirrored in tailwind.config.ts under theme.extend.
  */
 export const colors = {
-  ink: "#0B0B0F",
-  inkSoft: "#111114",
-  gold: "#C9A227",
-  copper: "#B87333",
-  bone: "#EDEDED",
-  ash: "#8A8A93",
-  line: "rgba(255,255,255,0.06)",
+  ink: "rgb(var(--color-ink) / <alpha-value>)",
+  inkSoft: "rgb(var(--color-ink-soft) / <alpha-value>)",
+  gold: "rgb(var(--color-gold) / <alpha-value>)",
+  copper: "rgb(var(--color-copper) / <alpha-value>)",
+  bone: "rgb(var(--color-bone) / <alpha-value>)",
+  ash: "rgb(var(--color-ash) / <alpha-value>)",
+  line: "rgb(var(--color-line) / 0.16)",
 } as const;
 
 export const fonts = {

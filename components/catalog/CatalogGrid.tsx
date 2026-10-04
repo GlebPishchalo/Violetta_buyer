@@ -47,10 +47,10 @@ export function CatalogGrid({ shops, showSearch = false }: CatalogGridProps) {
                 key={key}
                 type="button"
                 onClick={() => setFilter(key)}
-                className={`border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors ${
+                className={`rounded-full border px-4 py-2 font-mono text-[9px] uppercase tracking-[0.12em] transition-[background,color,border,transform] duration-200 hover:-translate-y-0.5 sm:text-[10px] ${
                   active
-                    ? "border-gold bg-gold/10 text-gold"
-                    : "border-line text-ash hover:border-ash hover:text-bone"
+                    ? "border-[#216e67] bg-[#216e67] text-white shadow-[0_4px_12px_rgba(33,110,103,0.18)]"
+                    : "border-[#347d77]/30 bg-white/35 text-[#426d68] hover:border-[#347d77]/60 hover:bg-white/65 hover:text-[#173e3a]"
                 }`}
               >
                 {t(`filters.${key}`)}
@@ -65,7 +65,7 @@ export function CatalogGrid({ shops, showSearch = false }: CatalogGridProps) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="w-full border border-line bg-ink px-3 py-2 font-sans text-sm text-bone placeholder:text-ash md:max-w-xs"
+            className="w-full rounded-full border border-[#347d77]/30 bg-white/45 px-4 py-2.5 font-sans text-sm text-[#173e3a] placeholder:text-[#64837f] focus:border-[#216e67] md:max-w-xs"
             aria-label={t("searchPlaceholder")}
           />
         ) : null}
@@ -74,19 +74,17 @@ export function CatalogGrid({ shops, showSearch = false }: CatalogGridProps) {
       {filtered.length === 0 ? (
         <p className="font-sans text-sm text-ash">{t("empty")}</p>
       ) : (
-        <motion.div
-          layout
-          className="divide-y divide-line border-y border-line"
-        >
+        <motion.div layout className="mx-auto max-w-4xl">
           <AnimatePresence mode="popLayout">
-            {filtered.map((shop) => (
+            {filtered.map((shop, index) => (
               <motion.div
                 key={shop.id}
                 layout
-                initial={{ opacity: 0, y: 10 }}
-                animate={reduceMotion ? { opacity: 1, y: 10 } : { opacity: 1, y: 0 }}
-                exit={reduceMotion ? { opacity: 0, y: 10 } : { opacity: 0, scale: 0.98 }}
-                transition={{ duration: reduceMotion ? 0.01 : 0.25 }}
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -12 }}
+                transition={{ duration: reduceMotion ? 0.01 : 0.32, delay: reduceMotion ? 0 : index * 0.045 }}
+                whileHover={reduceMotion ? undefined : { x: 3 }}
               >
                 <ShopCard shop={shop} />
               </motion.div>

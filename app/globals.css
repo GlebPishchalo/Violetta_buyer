@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-ink: 11 11 15;
+  --color-ink-soft: 17 17 20;
+  --color-gold: 201 162 39;
+  --color-copper: 184 115 51;
+  --color-bone: 237 237 237;
+  --color-ash: 138 138 147;
+  --color-line: 255 255 255;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -9,6 +19,12 @@
 
   body {
     @apply bg-ink text-bone font-sans antialiased;
+  }
+
+  body.public-body {
+    background: #e9f7f5;
+    color: #183d3a;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 72px);
   }
 
   ::selection {
@@ -44,6 +60,57 @@
   *::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.12);
   }
+}
+
+.public-site {
+  --color-ink: 235 249 247;
+  --color-ink-soft: 210 240 237;
+  --color-gold: 35 126 121;
+  --color-copper: 191 105 78;
+  --color-bone: 24 61 58;
+  --color-ash: 75 112 108;
+  --color-line: 48 112 106;
+  background: #e9f7f5;
+  color: #183d3a;
+}
+
+.public-site .text-line {
+  color: rgb(48 112 106 / 0.32);
+}
+
+.admin-body {
+  --color-ink: 240 249 247;
+  --color-ink-soft: 225 241 238;
+  --color-gold: 35 126 121;
+  --color-copper: 175 97 77;
+  --color-bone: 26 57 54;
+  --color-ash: 81 112 108;
+  --color-line: 52 125 119;
+  background: #f0f8f6;
+  color: #1a3936;
+}
+
+.admin-body .border-line {
+  border-color: rgb(52 125 119 / 0.2);
+}
+
+.admin-body ::selection {
+  background-color: #237e79;
+  color: #f5fbfa;
+}
+
+@media (min-width: 768px) {
+  body.public-body {
+    padding-bottom: 0;
+  }
+}
+
+body.public-body * {
+  scrollbar-color: rgba(35, 126, 121, 0.25) transparent;
+}
+
+body.public-body *::-webkit-scrollbar-thumb {
+  background-color: rgba(35, 126, 121, 0.25);
 }
 
 @layer utilities {

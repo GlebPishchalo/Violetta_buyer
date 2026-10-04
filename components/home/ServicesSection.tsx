@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDownToLine, ArrowUpFromLine, Plane, ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
@@ -17,12 +18,7 @@ type ServicesSectionProps = {
   sectionId?: string;
 };
 
-const icons = [
-  PlaneIcon,
-  BagIcon,
-  ArrowDownIcon,
-  ArrowUpIcon,
-] as const;
+const icons = [Plane, ShoppingBag, ArrowDownToLine, ArrowUpFromLine] as const;
 
 export function ServicesSection({
   items,
@@ -49,22 +45,24 @@ export function ServicesSection({
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {items.map((item, index) => {
-          const Icon = icons[index] ?? PlaneIcon;
+          const Icon = icons[index] ?? Plane;
           const number = String(index + 1).padStart(2, "0");
 
           const className =
-            "group relative border border-line bg-ink-soft p-6 transition-colors hover:border-gold md:p-8";
+            "group relative isolate min-h-[210px] overflow-hidden rounded-[1.25rem] border border-[#347d77]/20 bg-white/45 p-6 shadow-[0_8px_28px_rgba(31,93,86,0.05)] transition-[border-color,background,box-shadow] duration-300 hover:border-[#347d77]/45 hover:bg-white/75 hover:shadow-[0_16px_38px_rgba(31,93,86,0.11)] md:p-8";
 
           const inner = (
             <>
-              <span className="pointer-events-none absolute right-5 top-4 font-serif text-5xl text-gold/30 md:text-6xl">
+              <span className="pointer-events-none absolute -right-1 -top-7 -z-10 font-serif text-[9rem] leading-none text-[#2f968d]/[0.07] transition-transform duration-500 group-hover:translate-y-2">
                 {number}
               </span>
-              <Icon />
-              <h3 className="mt-5 font-serif text-xl text-bone md:text-2xl">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#cae8e3] text-[#216e67] transition-transform duration-300 group-hover:scale-105">
+                <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
+              </span>
+              <h3 className="mt-6 max-w-[18ch] font-serif text-xl text-[#173e3a] md:text-2xl">
                 {item.title}
               </h3>
-              <p className="mt-3 font-sans text-sm leading-relaxed text-ash">
+              <p className="mt-2 max-w-md font-sans text-sm leading-relaxed text-[#527a75]">
                 {item.body}
               </p>
             </>
@@ -80,7 +78,7 @@ export function ServicesSection({
                 duration: reduceMotion ? 0 : 0.4,
                 delay: reduceMotion ? 0 : index * 0.08,
               }}
-              whileHover={reduceMotion ? undefined : { y: -4 }}
+              whileHover={reduceMotion ? undefined : { y: -5 }}
               className={className}
             >
               {inner}
@@ -93,56 +91,5 @@ export function ServicesSection({
         })}
       </div>
     </Section>
-  );
-}
-
-function iconProps(className = "text-gold") {
-  return {
-    width: 28,
-    height: 28,
-    viewBox: "0 0 28 28",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.25,
-    className,
-    "aria-hidden": true as const,
-  };
-}
-
-function PlaneIcon() {
-  return (
-    <svg {...iconProps()}>
-      <path d="M4 16l8-2 10-8-2 10-2 8-6-6-8-2z" />
-      <path d="M12 14l-4 8" />
-    </svg>
-  );
-}
-
-function BagIcon() {
-  return (
-    <svg {...iconProps()}>
-      <rect x="6" y="10" width="16" height="12" rx="1" />
-      <path d="M10 10V8a4 4 0 018 0v2" />
-    </svg>
-  );
-}
-
-function ArrowDownIcon() {
-  return (
-    <svg {...iconProps()}>
-      <path d="M14 5v16" />
-      <path d="M8 15l6 6 6-6" />
-      <path d="M6 8h16" />
-    </svg>
-  );
-}
-
-function ArrowUpIcon() {
-  return (
-    <svg {...iconProps()}>
-      <path d="M14 23V7" />
-      <path d="M8 13l6-6 6 6" />
-      <path d="M6 20h16" />
-    </svg>
   );
 }
