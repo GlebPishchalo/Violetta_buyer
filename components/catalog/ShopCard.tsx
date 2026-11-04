@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { pickDescription } from "@/lib/i18n-fields";
 import type { Locale } from "@/i18n/routing";
@@ -38,8 +39,23 @@ export function ShopCard({ shop }: ShopCardProps) {
         href={shop.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-5 transition-[padding] duration-300 hover:px-3 sm:min-h-28 sm:gap-8 sm:py-6"
+        className={`grid min-h-24 items-center gap-4 py-5 transition-[padding] duration-300 hover:px-3 sm:min-h-28 sm:gap-8 sm:py-6 ${
+          shop.image
+            ? "grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:grid-cols-[5rem_minmax(0,1fr)_auto]"
+            : "grid-cols-[minmax(0,1fr)_auto]"
+        }`}
       >
+        {shop.image ? (
+          <div className="relative aspect-square w-14 overflow-hidden border border-[#347d77]/20 bg-white p-1.5 sm:w-20 sm:p-2">
+            <Image
+              src={shop.image}
+              alt={`${shop.name} логотип`}
+              fill
+              sizes="(min-width: 640px) 80px, 56px"
+              className="object-contain p-1"
+            />
+          </div>
+        ) : null}
         <div className="min-w-0">
           <div className="mb-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
             <h3 className="truncate font-serif text-xl text-[#173e3a] sm:text-2xl">

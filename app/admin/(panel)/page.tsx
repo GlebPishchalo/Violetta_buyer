@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import type { Flight, Review } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { DashboardPending } from "./DashboardPending";
@@ -55,6 +56,16 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-10">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="font-serif text-2xl text-bone">Главное меню</h2>
+        <Link
+          href="/admin/content"
+          className="inline-flex min-h-10 items-center border border-gold px-4 font-sans text-sm text-gold transition-colors hover:bg-gold/10"
+        >
+          Редактировать текст главной страницы
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {metrics.map((m) => (
           <div

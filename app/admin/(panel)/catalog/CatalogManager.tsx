@@ -17,7 +17,15 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { ExternalLink, GripVertical, Pencil, Trash2 } from "lucide-react";
+import {
+  ExternalLink,
+  GripVertical,
+  ImagePlus,
+  Pencil,
+  Trash2,
+  Upload,
+  X,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -231,6 +239,19 @@ function SortableShopCard({
         >
           <GripVertical size={18} aria-hidden="true" />
         </button>
+        <div className="relative h-12 w-12 shrink-0 overflow-hidden border border-line bg-white p-1.5">
+          {shop.image ? (
+            <Image
+              src={shop.image}
+              alt={`${shop.name} логотип`}
+              fill
+              sizes="48px"
+              className="object-contain"
+            />
+          ) : (
+            <ImagePlus className="h-full w-full p-2 text-ash" aria-hidden="true" />
+          )}
+        </div>
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex flex-wrap items-center gap-x-3 gap-y-1">
             <h3 className="truncate font-serif text-lg text-bone">{shop.name}</h3>
@@ -306,6 +327,7 @@ function ShopFormModal({
       image: shop?.image ?? "",
     },
   });
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -326,37 +348,34 @@ function ShopFormModal({
   async function uploadFile(file: File) {
     const body = new FormData();
     body.append("file", file);
-    let res: Response;
+    setUploading(true);
     try {
-      res = await fetch("/api/upload", { method: "POST", body, credentials: "same-origin" });
-    } catch (err) {
-      // network error
-      // eslint-disable-next-line no-console
-      console.error("uploadFile: fetch failed", err);
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body,
+        credentials: "same-origin",
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
+
+      if (!response.ok) {
+        toast.error(data.error ?? "Ошибка загрузки");
+        return;
+      }
+      if (!data.url) {
+        toast.error("Не удалось получить изображение");
+        return;
+      }
+
+      setValue("image", data.url, { shouldValidate: true });
+      toast.success("Изображение загружено");
+    } catch {
       toast.error("Ошибка сети при загрузке");
-      return;
+    } finally {
+      setUploading(false);
     }
-
-    let data: unknown;
-    try {
-      data = await res.json();
-    } catch (err) {
-      // non-json response
-      // eslint-disable-next-line no-console
-      console.error("uploadFile: invalid JSON response", err, await res.text());
-      toast.error("Ошибка загрузки: неверный ответ сервера");
-      return;
-    }
-
-    if (!res.ok) {
-      const d = data as { error?: string };
-      toast.error(d.error ?? "Ошибка загрузки");
-      return;
-    }
-
-    const d = data as { url: string };
-    setValue("image", d.url, { shouldValidate: true });
-    toast.success("Изображение загружено");
   }
 
   async function onSubmit(values: ShopFormValues) {
@@ -458,24 +477,42 @@ function ShopFormModal({
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
-            className="font-sans text-sm text-ash"
+            disabled={uploading}
+            className="block w-full font-sans text-sm text-ash file:mr-3 file:cursor-pointer file:border-0 file:bg-gold file:px-3 file:py-2 file:font-sans file:text-xs file:text-ink hover:file:bg-gold-light disabled:opacity-50"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) void uploadFile(file);
             }}
           />
+          <p className="text-xs text-ash">
+            JPEG, PNG или WebP, до 5 МБ. Логотипы будут показаны без обрезки.
+          </p>
           {image ? (
-            <div className="relative mt-2 h-28 w-full overflow-hidden border border-line">
-              <Image src={image} alt="" fill className="object-cover" />
+            <div className="relative mt-3 aspect-square w-36 overflow-hidden border border-line bg-white p-2">
+              <Image src={image} alt="Предпросмотр изображения магазина" fill sizes="144px" className="object-contain p-2" />
+              <button
+                type="button"
+                onClick={() => setValue("image", "", { shouldValidate: true })}
+                className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center bg-ink text-bone transition-colors hover:bg-copper"
+                aria-label="Удалить изображение"
+                title="Удалить изображение"
+              >
+                <X size={15} aria-hidden="true" />
+              </button>
             </div>
+          ) : null}
+          {uploading ? (
+            <span className="inline-flex items-center gap-2 text-xs text-gold" role="status">
+              <Upload size={14} aria-hidden="true" /> Загрузка изображения…
+            </span>
           ) : null}
         </Field>
         <div className="flex justify-end gap-3">
           <Button type="button" variant="ghost" onClick={onClose}>
             Отмена
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            Сохранить
+          <Button type="submit" disabled={isSubmitting || uploading}>
+            {uploading ? "Загрузка…" : "Сохранить"}
           </Button>
         </div>
       </form>
