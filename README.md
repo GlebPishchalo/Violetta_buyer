@@ -76,13 +76,14 @@ pnpm build
 ## Деплой на Vercel + Neon
 
 1. Создайте проект PostgreSQL в [Neon](https://neon.tech).
-2. Скопируйте connection string в Vercel → Project → Settings → Environment Variables:
+2. Создайте Vercel Blob Store и подключите его к проекту. Vercel добавит `BLOB_READ_WRITE_TOKEN` в переменные окружения.
+3. Скопируйте connection string в Vercel → Project → Settings → Environment Variables:
    - `DATABASE_URL`
    - `NEXTAUTH_SECRET` (сгенерируйте новый)
    - `NEXTAUTH_URL` (URL вашего деплоя, например `https://your-app.vercel.app`)
    - `ADMIN_LOGIN`
-3. Подключите репозиторий к Vercel и задеплойте.
-4. После первого деплоя выполните миграции / push и seed один раз:
+4. Подключите репозиторий к Vercel и задеплойте.
+5. После первого деплоя выполните миграции / push и seed один раз:
 
 ```bash
 # Локально, указав production DATABASE_URL
@@ -97,6 +98,7 @@ prisma generate && prisma db push && next build
 ```
 
 SQLite на Vercel serverless не использовать — файловая система эфемерна. Только PostgreSQL (Neon / Supabase / Vercel Postgres).
+Загрузка изображений в production использует Vercel Blob; без подключенного Blob Store загрузка вернет ошибку настройки. Локально изображения по-прежнему сохраняются в `public/uploads`.
 
 ## Структура (кратко)
 

@@ -1,9 +1,12 @@
 import { createId } from "@paralleldrive/cuid2";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { authOptions } from "@/lib/auth";
+
+export const runtime = "nodejs";
 
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -54,6 +57,24 @@ export async function POST(req: NextRequest) {
   void safeOriginal;
 
   const filename = `${id}.${ext}`;
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(filename, file, {
+      access: "public",
+      addRandomSuffix: false,
+      contentType: file.type,
+    });
+
+    return NextResponse.json({ url: blob.url });
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json(
+      { error: "Хранилище изображений не настроено. Подключите Vercel Blob." },
+      { status: 503 }
+    );
+  }
+
   const uploadsDir = path.join(process.cwd(), "public", "uploads");
   await mkdir(uploadsDir, { recursive: true });
 
