@@ -10,7 +10,7 @@ export async function BenefitsSection() {
   return (
     <section className="bg-[#e8f4f1] px-5 py-12 text-[#203c3a] sm:py-16 md:px-8 md:py-20">
       <div className="mx-auto max-w-7xl">
-        <header className="text-center">
+        <header className="reveal-on-scroll text-center">
           <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#387a73] sm:text-[10px]">
             {t("kicker")}
           </p>
@@ -45,12 +45,12 @@ export async function BenefitsSection() {
           </div>
         </div>
 
-        <div className="mt-8 grid divide-y divide-[#347d77]/20 border-y border-[#347d77]/20 md:mt-12 md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div className="mt-8 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-4">
           {items.map((item, index) => {
             const Icon = benefitIcons[index] ?? BadgeCheck;
             return (
-              <article key={item.title} className="flex gap-4 px-1 py-5 sm:px-5 md:flex-col md:px-7 md:py-7">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#347d77]/25 text-[#347d77] md:h-12 md:w-12">
+              <article key={item.title} className="reveal-on-scroll group flex gap-4 rounded-2xl border border-[#347d77]/15 bg-white/35 px-4 py-5 shadow-sm backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#347d77]/25 hover:bg-white/70 hover:shadow-xl sm:px-5 md:flex-col md:px-7 md:py-7">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#347d77]/25 text-[#347d77] transition-all duration-300 ease-out group-hover:scale-[1.02] group-hover:bg-white/70 md:h-12 md:w-12">
                   <Icon size={20} strokeWidth={1.4} aria-hidden="true" />
                 </span>
                 <div>

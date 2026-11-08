@@ -18,6 +18,12 @@ export function revalidatePublicCatalog() {
   revalidatePath("/en");
 }
 
+export function revalidatePublicProductReviews() {
+  revalidatePath("/admin/product-reviews");
+  revalidatePath("/ru/product-reviews");
+  revalidatePath("/en/product-reviews");
+}
+
 export function revalidatePublicContent() {
   revalidatePath("/admin/content");
   revalidatePath("/admin/settings");

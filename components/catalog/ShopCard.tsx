@@ -34,19 +34,19 @@ export function ShopCard({ shop }: ShopCardProps) {
     | "department";
 
   return (
-    <article className="group border-b border-[#347d77]/25 first:border-t">
+    <article className="reveal-on-scroll group overflow-hidden rounded-2xl border border-[#347d77]/20 bg-white/35 shadow-sm backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#347d77]/40 hover:bg-white/65 hover:shadow-xl">
       <a
         href={shop.url}
         target="_blank"
         rel="noopener noreferrer"
-        className={`grid min-h-24 items-center gap-4 py-5 transition-[padding] duration-300 hover:px-3 sm:min-h-28 sm:gap-8 sm:py-6 ${
+        className={`grid min-h-24 items-center gap-4 px-4 py-5 transition-all duration-300 ease-out sm:min-h-28 sm:gap-8 sm:px-6 sm:py-6 ${
           shop.image
             ? "grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:grid-cols-[5rem_minmax(0,1fr)_auto]"
             : "grid-cols-[minmax(0,1fr)_auto]"
         }`}
       >
         {shop.image ? (
-          <div className="relative aspect-square w-14 overflow-hidden border border-[#347d77]/20 bg-white p-1.5 sm:w-20 sm:p-2">
+          <div className="relative aspect-square w-14 overflow-hidden rounded-xl border border-[#347d77]/20 bg-white p-1.5 shadow-sm sm:w-20 sm:p-2">
             <Image
               src={shop.image}
               alt={`${shop.name} логотип`}
@@ -73,7 +73,7 @@ export function ShopCard({ shop }: ShopCardProps) {
             <p className="truncate text-xs text-[#426d68]">{shop.url}</p>
           )}
         </div>
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#347d77]/35 text-[#1e625c] transition-[background,color,transform] duration-300 group-hover:translate-x-1 group-hover:bg-[#1e625c] group-hover:text-white sm:h-12 sm:w-12">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#347d77]/35 text-[#1e625c] transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:bg-[#1e625c] group-hover:text-white sm:h-12 sm:w-12">
           <ArrowUpRight size={19} strokeWidth={1.5} aria-hidden="true" />
           <span className="sr-only">{t("viewShop")}</span>
         </span>

@@ -8,6 +8,7 @@ import {
   LogOut,
   MessageSquareText,
   Plane,
+  ShoppingBag,
   Settings,
   Store,
   TextCursorInput,
@@ -19,6 +20,7 @@ const nav: { href: string; label: string; exact?: boolean; icon: LucideIcon }[] 
   { href: "/admin/catalog", label: "Магазины", icon: Store },
   { href: "/admin/flights", label: "Вылеты", icon: Plane },
   { href: "/admin/reviews", label: "Отзывы", icon: MessageSquareText },
+  { href: "/admin/product-reviews", label: "Обзоры товаров", icon: ShoppingBag },
   { href: "/admin/content", label: "Контент", icon: TextCursorInput },
   { href: "/admin/settings", label: "Настройки", icon: Settings },
 ];

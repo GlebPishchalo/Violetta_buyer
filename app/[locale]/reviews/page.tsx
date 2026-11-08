@@ -46,7 +46,7 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
 
   return (
     <Section className="pt-10 md:pt-16">
-      <div className="mb-10 max-w-xl space-y-3">
+      <div className="reveal-on-scroll mb-10 max-w-xl space-y-3">
         <Kicker>{t("kicker")}</Kicker>
         <h1 className="font-serif text-4xl text-bone md:text-5xl">
           {t("pageTitle")}

@@ -15,7 +15,7 @@ export async function CatalogSection({ shops }: CatalogSectionProps) {
   return (
     <section id="catalog" className="bg-[#96d6cf] py-10 md:py-16">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="mb-8 flex flex-col items-center gap-5 text-center md:mb-10">
+        <div className="reveal-on-scroll mb-8 flex flex-col items-center gap-5 text-center md:mb-10">
           <div className="max-w-xl space-y-3">
             <Kicker>{t("kicker")}</Kicker>
             <h2 className="font-serif text-3xl text-bone md:text-4xl">

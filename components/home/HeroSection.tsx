@@ -31,7 +31,7 @@ export function HeroSection({
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#dff2ef] text-[#173e3a]">
+    <section className="reveal-on-scroll relative isolate overflow-hidden bg-[#dff2ef] text-[#173e3a]">
       <Marquee className="hidden border-t-0 border-[#347d77]/20 [&_div]:py-2 sm:block sm:[&_div]:py-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#347d77]">
           {t("marquee")}
@@ -62,7 +62,7 @@ export function HeroSection({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#347d77]/30 bg-white/45 px-4 py-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#286a64] backdrop-blur-sm sm:text-[10px]">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#347d77]/30 bg-white/45 px-4 py-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#286a64] shadow-lg backdrop-blur-xl sm:text-[10px]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#4eaaa0]" />
             {kicker}
           </span>
@@ -75,7 +75,7 @@ export function HeroSection({
           <div className="mt-6 flex flex-nowrap justify-center gap-2 sm:mt-7 sm:gap-3">
             <a
               href="#catalog"
-              className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#216e67] px-4 py-2.5 text-xs font-medium text-white shadow-[0_8px_24px_rgba(33,110,103,0.2)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#185a54] hover:shadow-[0_12px_28px_rgba(33,110,103,0.28)] sm:min-h-12 sm:gap-3 sm:px-6 sm:py-3 sm:text-sm"
+              className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#216e67] px-4 py-2.5 text-xs font-medium text-white shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:bg-[#185a54] hover:shadow-2xl sm:min-h-12 sm:gap-3 sm:px-6 sm:py-3 sm:text-sm"
             >
               {tc("viewCatalog")}
               <ArrowDown size={16} className="transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
@@ -84,7 +84,7 @@ export function HeroSection({
               href={telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#286a64]/35 bg-white/50 px-3 py-2.5 text-xs text-[#205b56] backdrop-blur-sm transition-[background,color,transform] duration-300 hover:-translate-y-0.5 hover:bg-white/85 sm:min-h-12 sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[#286a64]/35 bg-white/50 px-3 py-2.5 text-xs text-[#205b56] shadow-lg backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-xl sm:min-h-12 sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
             >
               <Send size={15} aria-hidden="true" />
               <span className="sm:hidden">Telegram</span>

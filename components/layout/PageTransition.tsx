@@ -23,7 +23,7 @@ export function PageTransition({ children }: PageTransitionProps) {
             initial={{ opacity: 0, y: 8 }}
             animate={reduceMotion ? { opacity: 1, y: 8 } : { opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0, y: 8 } : { opacity: 0, y: -4 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.2, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.36, ease: [0.16, 1, 0.3, 1] }}
           >
             {children}
           </motion.div>

@@ -37,6 +37,15 @@ export const shopSchema = z.object({
   order: z.coerce.number().int().optional(),
 });
 
+export const productReviewSchema = z.object({
+  title: z.string().trim().min(1).max(120),
+  descriptionRu: z.string().trim().min(1).max(2000),
+  descriptionEn: z.string().trim().max(2000).optional().or(z.literal("")),
+  images: z.array(z.string().trim().min(1).max(2048)).nonempty().max(20),
+  productUrl: z.string().trim().url().max(2048),
+  order: z.coerce.number().int().optional(),
+});
+
 export const flightSchema = z.object({
   date: z.string().min(1),
   direction: z.enum(["DXB-MOW", "MOW-DXB"]),
@@ -55,4 +64,5 @@ export const contentBlocksSchema = z.array(contentBlockUpdateSchema).min(1);
 export type ReviewCreateInput = z.infer<typeof reviewCreateSchema>;
 export type ReviewUpdateInput = z.infer<typeof reviewUpdateSchema>;
 export type ShopInput = z.infer<typeof shopSchema>;
+export type ProductReviewInput = z.infer<typeof productReviewSchema>;
 export type FlightInput = z.infer<typeof flightSchema>;

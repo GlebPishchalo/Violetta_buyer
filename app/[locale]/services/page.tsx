@@ -60,7 +60,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
   return (
     <>
       <Section className="pb-0 pt-10 md:pt-16">
-        <div className="max-w-xl space-y-3">
+        <div className="reveal-on-scroll max-w-xl space-y-3">
           <Kicker>{t("kicker")}</Kicker>
           <h1 className="font-serif text-4xl text-bone md:text-5xl">
             {t("pageTitle")}
@@ -76,7 +76,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
       <Divider />
 
       <Section id="flights">
-        <div className="mb-8 max-w-xl space-y-3">
+        <div className="reveal-on-scroll mb-8 max-w-xl space-y-3">
           <Kicker>{t("flightsKicker")}</Kicker>
           <h2 className="font-serif text-3xl text-bone md:text-4xl">
             {t("flightsTitle")}
@@ -89,7 +89,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
         <>
           <Divider variant="diamond" />
           <Section>
-            <div className="mb-8 max-w-xl space-y-3">
+            <div className="reveal-on-scroll mb-8 max-w-xl space-y-3">
               <Kicker>{t("termsKicker")}</Kicker>
               <h2 className="font-serif text-3xl text-bone md:text-4xl">
                 {t("termsTitle")}

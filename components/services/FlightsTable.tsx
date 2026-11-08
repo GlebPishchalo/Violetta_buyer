@@ -35,7 +35,7 @@ export async function FlightsTable({ flights, locale }: FlightsTableProps) {
       {flights.map((flight, index) => (
         <article
           key={flight.id}
-          className="group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#347d77]/20 bg-white/45 p-4 transition-[background,border-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#347d77]/40 hover:bg-white/75 hover:shadow-[0_12px_28px_rgba(31,93,86,0.08)] sm:p-5"
+          className="reveal-on-scroll group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#347d77]/20 bg-white/45 p-4 shadow-lg shadow-[#1c4434]/[0.05] backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#347d77]/40 hover:bg-white/75 hover:shadow-2xl sm:p-5"
         >
           <time
             dateTime={flight.date.toISOString()}

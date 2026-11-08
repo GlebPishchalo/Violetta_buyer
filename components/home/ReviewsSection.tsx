@@ -21,7 +21,7 @@ export function ReviewsSection({ reviews }: ReviewsSectionProps) {
   return (
     <Section id="reviews">
       <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div className="max-w-xl space-y-3">
+        <div className="reveal-on-scroll max-w-xl space-y-3">
           <Kicker>{t("kicker")}</Kicker>
           <h2 className="font-serif text-3xl text-bone md:text-4xl">
             {t("title")}

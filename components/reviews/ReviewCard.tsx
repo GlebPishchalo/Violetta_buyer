@@ -25,7 +25,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
       : review.createdAt;
 
   return (
-    <article className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-[#347d77]/20 bg-white/45 p-5 transition-[background,border-color,box-shadow] duration-300 hover:border-[#347d77]/40 hover:bg-white/70 hover:shadow-[0_14px_32px_rgba(31,93,86,0.08)] sm:p-6">
+    <article className="reveal-on-scroll group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-[#347d77]/20 bg-white/45 p-5 shadow-lg shadow-[#1c4434]/[0.05] backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#347d77]/40 hover:bg-white/75 hover:shadow-2xl sm:p-6">
       <div className="flex items-center justify-between gap-3">
         <Rating value={review.rating} />
         <Quote size={20} className="shrink-0 text-[#3a9189]/40" aria-hidden="true" />

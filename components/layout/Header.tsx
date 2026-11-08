@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, Search, X, Store, Plane, PanelsTopLeft, Send, Star, type LucideIcon } from "lucide-react";
+import { Menu, Search, X, Store, Plane, PanelsTopLeft, Send, Star, ShoppingBag, type LucideIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -55,19 +55,20 @@ export function Header({ telegramUrl }: HeaderProps) {
     { href: "/services#flights" as const, label: t("flights"), icon: Plane },
     { href: "/services" as const, label: t("services"), icon: PanelsTopLeft },
     { href: "/reviews" as const, label: t("reviews"), icon: Star },
+    { href: "/product-reviews" as const, label: t("productReviews"), icon: ShoppingBag },
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b border-[#347d77]/20 transition-[background,box-shadow] duration-300 ${
-          scrolled ? "bg-[#e6f4f1]/95 shadow-[0_5px_25px_rgba(29,91,85,0.08)] backdrop-blur-md" : "bg-[#e6f4f1]/85 backdrop-blur-md"
+        className={`sticky top-0 z-50 border-b border-[#347d77]/20 transition-all duration-300 ease-out ${
+          scrolled ? "bg-[#e6f4f1]/95 shadow-xl backdrop-blur-xl" : "bg-[#e6f4f1]/85 backdrop-blur-xl"
         }`}
       >
         <div className="mx-auto grid h-[68px] max-w-7xl grid-cols-3 items-center px-4 sm:px-6">
           <Link
             href="/catalog"
-            className="inline-flex h-9 w-9 items-center justify-center gap-2 justify-self-start rounded-full border border-[#347d77]/30 px-0 text-[#347d77] transition-[background,color] hover:bg-white/70 hover:text-[#173e3a] sm:w-auto sm:justify-center sm:px-3"
+            className="inline-flex h-9 w-9 items-center justify-center gap-2 justify-self-start rounded-full border border-[#347d77]/30 px-0 text-[#347d77] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/80 hover:text-[#173e3a] hover:shadow-lg sm:w-auto sm:justify-center sm:px-3"
             aria-label={t("shops")}
             title={t("shops")}
           >
@@ -76,7 +77,7 @@ export function Header({ telegramUrl }: HeaderProps) {
           </Link>
           <Link
             href="/"
-            className="justify-self-center whitespace-nowrap font-serif text-[1.5rem] leading-none text-[#286a64] transition-transform duration-300 hover:scale-[1.03] sm:text-[1.8rem]"
+            className="justify-self-center whitespace-nowrap font-serif text-[1.5rem] leading-none tracking-[0.04em] text-[#286a64] transition-all duration-300 ease-out hover:scale-[1.02] sm:text-[1.8rem]"
           >
             AVALISE
           </Link>
@@ -86,7 +87,7 @@ export function Header({ telegramUrl }: HeaderProps) {
               href={telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden h-9 w-9 items-center justify-center rounded-full bg-[#cae8e3] text-[#286a64] transition-[background,transform] hover:scale-105 hover:bg-[#b5ded7] sm:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full bg-[#cae8e3] text-[#286a64] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white hover:shadow-lg sm:inline-flex"
               aria-label={tc("telegram")}
               title={tc("telegram")}
             >
@@ -94,7 +95,7 @@ export function Header({ telegramUrl }: HeaderProps) {
             </a>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#286a64] transition-colors hover:bg-[#cae8e3] md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#286a64] transition-all duration-300 ease-out hover:bg-[#cae8e3] md:hidden"
               aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
@@ -143,7 +144,7 @@ export function Header({ telegramUrl }: HeaderProps) {
             />
             <motion.nav
               aria-label={t("mobileNav")}
-              className="absolute inset-y-0 right-0 flex w-[min(100%,20rem)] flex-col border-l border-line bg-ink-soft px-6 py-8"
+              className="absolute inset-y-0 right-0 flex w-[min(100%,20rem)] flex-col border-l border-line bg-ink-soft/95 px-6 py-8 shadow-2xl backdrop-blur-2xl"
               initial={reduceMotion ? { opacity: 0 } : { x: "100%" }}
               animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { x: "100%" }}
@@ -166,7 +167,7 @@ export function Header({ telegramUrl }: HeaderProps) {
                     <Link
                       href={item.href}
                       onClick={() => selectNavItem(item.href)}
-                      className="font-serif text-2xl text-bone transition-colors hover:text-gold"
+                      className="font-serif text-2xl text-bone transition-all duration-300 ease-out hover:translate-x-1 hover:text-gold"
                     >
                       {item.label}
                     </Link>
@@ -177,7 +178,7 @@ export function Header({ telegramUrl }: HeaderProps) {
                 href={telegramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center justify-center gap-2 bg-gold px-4 py-3 font-sans text-sm font-medium text-ink"
+                className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gold px-4 py-3 font-sans text-sm font-medium text-ink shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl"
               >
                 <TelegramIcon />
                 {tc("telegram")}
@@ -187,11 +188,12 @@ export function Header({ telegramUrl }: HeaderProps) {
         ) : null}
       </AnimatePresence>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-line bg-ink-soft/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_32px_rgba(20,76,72,0.12)] backdrop-blur-md md:hidden" aria-label={t("mobileNav")}>
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-line bg-ink-soft/95 pb-[env(safe-area-inset-bottom)] shadow-2xl backdrop-blur-xl md:hidden" aria-label={t("mobileNav")}>
         <DockLink href="/catalog" icon={Store} label={t("shops")} active={pathname === "/catalog"} onClick={() => selectNavItem("/catalog")} />
         <DockLink href="/services#flights" icon={Plane} label={t("flights")} active={pathname === "/services" && hash === "#flights"} onClick={() => selectNavItem("/services#flights")} />
         <DockLink href="/services" icon={PanelsTopLeft} label={t("services")} active={pathname === "/services" && hash !== "#flights"} onClick={() => selectNavItem("/services")} />
         <DockLink href="/reviews" icon={Star} label={t("reviews")} active={pathname === "/reviews"} onClick={() => selectNavItem("/reviews")} />
+        <DockLink href="/product-reviews" icon={ShoppingBag} label={t("productReviews")} active={pathname === "/product-reviews"} onClick={() => selectNavItem("/product-reviews")} />
       </nav>
     </>
   );
@@ -204,7 +206,7 @@ function DockLink({
   active,
   onClick,
 }: {
-  href: "/catalog" | "/services#flights" | "/services" | "/reviews";
+  href: "/catalog" | "/services#flights" | "/services" | "/reviews" | "/product-reviews";
   icon: LucideIcon;
   label: string;
   active: boolean;
@@ -215,7 +217,7 @@ function DockLink({
       href={href}
       onClick={onClick}
       aria-current={active ? "page" : undefined}
-      className={`flex min-h-[68px] flex-col items-center justify-center gap-1 rounded-t-[20px] px-1 text-center transition-[background,color] duration-200 hover:bg-[#cce9e4] hover:text-[#173e3a] ${
+      className={`flex min-h-[68px] flex-col items-center justify-center gap-1 rounded-t-[20px] px-1 text-center transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#cce9e4] hover:text-[#173e3a] ${
         active ? "bg-[#e6f4f1] text-[#205f59]" : "text-[#286a64]"
       }`}
     >
@@ -232,7 +234,7 @@ function DesktopNavLink({
   active,
   onClick,
 }: {
-  href: "/catalog" | "/services#flights" | "/services" | "/reviews";
+  href: "/catalog" | "/services#flights" | "/services" | "/reviews" | "/product-reviews";
   label: string;
   icon: LucideIcon;
   active: boolean;
@@ -243,10 +245,10 @@ function DesktopNavLink({
       href={href}
       onClick={onClick}
       aria-current={active ? "page" : undefined}
-      className={`inline-flex h-[46px] items-center gap-2 rounded-t-[16px] px-5 text-[11px] uppercase tracking-[0.08em] transition-[background,color] duration-200 ${
+      className={`inline-flex h-[46px] items-center gap-2 rounded-t-[16px] px-5 text-[11px] uppercase tracking-[0.08em] transition-all duration-300 ease-out ${
         active
           ? "bg-[#cce9e4] text-[#174e49]"
-          : "text-[#527a75] hover:bg-white/65 hover:text-[#173e3a]"
+          : "text-[#527a75] hover:-translate-y-0.5 hover:bg-white/70 hover:text-[#173e3a]"
       }`}
     >
       <Icon size={16} strokeWidth={1.6} aria-hidden="true" />

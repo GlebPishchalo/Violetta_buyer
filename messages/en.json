@@ -4,6 +4,7 @@
     "shops": "Shops",
     "flights": "Flights",
     "reviews": "Reviews",
+    "productReviews": "Product reviews",
     "catalog": "Catalog",
     "home": "Home",
     "menuOpen": "Open menu",
@@ -100,6 +101,16 @@
     "filter5": "5",
     "filter4": "4",
     "filter3": "3 and below"
+  },
+  "productReviews": {
+    "kicker": "Selected finds",
+    "title": "Product reviews",
+    "subtitle": "A closer look at products available to order from UAE stores.",
+    "pageTitle": "Product reviews",
+    "pageDescription": "Photo reviews of products from UAE stores, with product links and ordering via Telegram.",
+    "viewProduct": "View product",
+    "askInTelegram": "Order on Telegram",
+    "empty": "Product reviews will be here soon."
   },
   "reviewForm": {
     "title": "Leave a review",

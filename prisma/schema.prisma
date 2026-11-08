@@ -37,6 +37,18 @@ model Review {
   createdAt DateTime @default(now())
 }
 
+model ProductReview {
+  id            String   @id @default(cuid())
+  title         String
+  descriptionRu String
+  descriptionEn String?
+  image         String
+  images        String[] @default([])
+  productUrl    String
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+}
+
 model Flight {
   id        String   @id @default(cuid())
   date      DateTime

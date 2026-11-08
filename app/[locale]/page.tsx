@@ -143,7 +143,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <ServicesSection items={services} />
       <Divider variant="diamond" />
       <Section id="flights">
-        <div className="mb-8 max-w-xl space-y-3">
+        <div className="reveal-on-scroll mb-8 max-w-xl space-y-3">
           <Kicker>{tServices("flightsKicker")}</Kicker>
           <h2 className="font-serif text-3xl text-bone md:text-4xl">
             {tServices("flightsTitle")}

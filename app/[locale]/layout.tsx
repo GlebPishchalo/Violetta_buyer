@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Grain } from "@/components/ui/Grain";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { getTelegramUrl } from "@/lib/content";
 import { routing, type Locale } from "@/i18n/routing";
 import "../globals.css";
@@ -58,6 +59,7 @@ export default async function LocaleLayout({
     >
       <body className="public-body">
         <Grain />
+        <ScrollReveal />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <div className="public-site flex min-h-screen flex-col">
             <Header telegramUrl={telegramUrl} />
